@@ -7,9 +7,8 @@ Let's see how to use *flogger* from scratch.
 Direct call to handler functions
 ********************************
 
-The ``DataLogger`` object is your interface to *flogger*. In its simplest form, this logger provides *handlers* that can
-be used to store different types of data. *Handlers* are helper methods which follows the signature
-``def handler(self, entry: string, data: dict)`` where:
+In its simplest use, flogger provides *handlers* function that can be used to store different types of data. *Handlers*
+are helper methods which follows the signature ``(entry: string, data: dict, ...)`` where:
 
    + ``entry`` represents the log entry
    + ``data`` contains ordered data; keys are integer increments and items are of various types depending on the handler.
@@ -21,10 +20,10 @@ be used to store different types of data. *Handlers* are helper methods which fo
 
 Example of direct use of handlers::
 
-   dl = DataLogger()
-   dl.echo_last("main_function", {0: "Hey You"})
-   dl.echo_last("main_function", {0: "Hey Again"})
-   dl.save_to_mpl_lines("main_function", {0: 1, 1:5, 2: 3})
+    import flogger as fl
+    fl.echo_last("main_function", {0: "Hey You"})
+    fl.echo_last("main_function", {0: "Hey Again"})
+    fl.save_to_mpl_lines("main_function", {0: 1, 1:5, 2: 3}, path="/home/user/logs")
 
 Automating with recurring lof entries
 *************************************
@@ -33,29 +32,31 @@ If you want to log a lot of different pieces of data into a lot of different for
 to handle the storage of data and the calling to every handlers here and there in your code. *Flogger* allows you to
 lighten your logging by declaring recurring log entries whose storage and handlers calling are automated. Example of use
 of recurring log entries::
-   # We initialize the logger
-   dl = DataLogger()
+    import flogger as fl
 
-   # We declare a recurring entries
-   dl.declare("Loss", [dl.echo_last, dl.add_tsb_scalar_last],
-                      [],
-                      [dl.save_to_json, dl.save_to_mpl_lines])
-   dl.declare("Performance", [],
-                             [],
-                             [dl.save_to_json])
+    # We initialize the logger
+    dl = fl.DataLogger()
 
-   # We push some data into recurring entries
-   dl.push("Loss", 0, 0.5)
-   # Calls `dl.echo_last` and `dl.add_tsb_scalar_last` on `{0:0.5}`
-   dl.push("Performance", 0, 0.7)
-   # Calls nothing
-   dl.push("Loss", 1, 0.6)
-   # Calls `dl.echo_last` and `dl.add_tsb_scalar_last` on `{0:0.5, 1:0.6}`
-   dl.push("Performance", 1, 0.8)
-   # Calls nothing
-   dl.dump()
-   # Calls `dl.save_to_json` and dl.save_to_mpl_lines` on `{0:0.5, 1:0.6}`
-   # and `dl.save_to_json` on  `{0:0.7, 1:0.8}`
+    # We declare a recurring entries
+    dl.declare("Loss", [fl.echo_last, fl.add_tsb_scalar_last],
+                       [],
+                       [fl.save_to_json, fl.save_to_mpl_lines])
+    dl.declare("Performance", [],
+                              [],
+                              [fl.save_to_json])
+
+    # We push some data into recurring entries
+    dl.push("Loss", 0, 0.5)
+    # Calls `fl.echo_last` and `fl.add_tsb_scalar_last` on `{0:0.5}`
+    dl.push("Performance", 0, 0.7)
+    # Calls nothing
+    dl.push("Loss", 1, 0.6)
+    # Calls `fl.echo_last` and `fl.add_tsb_scalar_last` on `{0:0.5, 1:0.6}`
+    dl.push("Performance", 1, 0.8)
+    # Calls nothing
+    dl.dump()
+    # Calls `fl.save_to_json` and `fl.save_to_mpl_lines` on `{0:0.5, 1:0.6}`
+    # and `fl.save_to_json` on  `{0:0.7, 1:0.8}`
 
 
 As shown in the example, you have to declare a log entry by using the ``declare(entry, ...)`` method. Doing so allows you

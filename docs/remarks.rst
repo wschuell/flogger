@@ -39,7 +39,7 @@ when registring by using partial functions::
 
    dl.declare("entry", [],
                        [],
-                       [partial(dl.save_to_mpl_histolines, color="red")])
+                       [partial(fl.save_to_mpl_histolines, color="red")])
 
 
 Logs folder structure

@@ -1,6 +1,14 @@
 API
 ===
 
-.. autoclass:: flogger.DataLogger
-    :members: set_path, set_name
+Data Logger
+***********
 
+.. autoclass:: flogger.DataLogger
+    :members:
+
+Handlers
+********
+
+.. automodule:: flogger.handlers
+    :members:
