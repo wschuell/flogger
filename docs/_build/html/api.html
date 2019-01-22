@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; flogger 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Some important remarks" href="remarks.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flogger
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Content</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remarks.html">Some important remarks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-logger">Data Logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-flogger.handlers">Handlers</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flogger</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data-logger">
+<h2>Data Logger<a class="headerlink" href="#data-logger" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="flogger.DataLogger">
+<em class="property">class </em><code class="descclassname">flogger.</code><code class="descname">DataLogger</code><a class="headerlink" href="#flogger.DataLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores and save various type of data under various forms.</p>
+<dl class="method">
+<dt id="flogger.DataLogger.declare">
+<code class="descname">declare</code><span class="sig-paren">(</span><em>entry</em>, <em>on_push_callables</em>, <em>on_dump_callables</em>, <em>on_reset_callables</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.declare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a recurring log entry.</p>
+<p>Registering an entry gives access to the <cite>push</cite>, <cite>reset</cite> and <cite>dump</cite> methods. Note that all the handlers must be
+able to handle the data that will be pushed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>on_push_callables</strong> (<em>List</em><em>[</em><em>handlers</em><em>]</em>) – Handlers called on data when <cite>push</cite> is called.</li>
+<li><strong>on_reset_callables</strong> (<em>List</em><em>[</em><em>handlers</em><em>]</em>) – Handlers called on data when <cite>reset</cite> is called.</li>
+<li><strong>on_dump_callables</strong> (<em>List</em><em>[</em><em>handlers</em><em>]</em>) – Handlers called on the data when <cite>dump</cite> is called.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls handlers declared for <cite>on_dump</cite> event, for all registered log entries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.get_entry_length">
+<code class="descname">get_entry_length</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.get_entry_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the number of data saved for a log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<em>string</em>) – Name of the log entry</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of data pieces in the entry storage</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.get_serie">
+<code class="descname">get_serie</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.get_serie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data in a list ordered by keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<em>string</em>) – Name of the log entry</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Serie of data ordered by key</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">List[any]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.push">
+<code class="descname">push</code><span class="sig-paren">(</span><em>entry</em>, <em>value</em>, <em>time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append data to a recurring log.</p>
+<p>All handlers registered for the <cite>on_push</cite> event will be called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry</li>
+<li><strong>value</strong> (<em>Any</em>) – Object containing the data to log. Should be of same type from call to call…</li>
+<li><strong>or None time</strong> (<em>int</em>) – Date of the logging (epoch, iteration, tic …). Will be used as key in the data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>dictionary. If <cite>None</cite>, the last data key plus one will be used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the data of a recurring log entry.</p>
+<p>All handlers registered for the <cite>on_reset</cite> event will be called before the storage is emptied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<em>string</em>) – name of the log entry.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.set_name">
+<code class="descname">set_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the name of the logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) – Name of the logger</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.set_path">
+<code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the root path of the logger. Used by all the handlers that write on disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>string</em>) – A valid path to write the data in.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.set_pool">
+<code class="descname">set_pool</code><span class="sig-paren">(</span><em>pool</em>, <em>n_par=5</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the executor to be used to call handlers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pool</strong> (<em>string</em>) – The type of executor to use to call handlers. Either “thread” or “process”.</li>
+<li><strong>n_par</strong> (<em>int</em>) – The number of executor to use.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flogger.DataLogger.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>log_durations=True</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the handling queue to be emptied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>log_durations</strong> (<em>bool</em>) – Whether to log the wait duration.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flogger.handlers">
+<span id="handlers"></span><h2>Handlers<a class="headerlink" href="#module-flogger.handlers" title="Permalink to this headline">¶</a></h2>
+<p>This module contains handlers for the DataLogger class.</p>
+<dl class="function">
+<dt id="flogger.handlers.add_tsb_image_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">add_tsb_image_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>subfolder=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.add_tsb_image_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that append the last image of the data to a tensorboard event file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array / torch tensor of shape [3, W, H]</li>
+<li><strong>subfolder</strong> (<em>string</em>) – Subfolder in which put the data</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.add_tsb_scalar_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">add_tsb_scalar_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>subfolder=''</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.add_tsb_scalar_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that appends the last item of the data dictionary to a tensorboard event file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a number</li>
+<li><strong>subfolder</strong> (<em>string</em>) – Subfolder in which put the data</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.add_tsb_scalars_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">add_tsb_scalars_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>labels=None</em>, <em>path='.'</em>, <em>subfolder=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.add_tsb_scalars_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that appends the last item of the data dictionary to a tensorboard event file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be numpy arrays of size [n] with constant n.</li>
+<li><strong>labels</strong> (<em>List</em><em>[</em><em>string</em><em>]</em>) – Labels to use for the lines</li>
+<li><strong>subfolder</strong> (<em>string</em>) – Subfolder in which put the data</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.echo_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">echo_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>output='stdout'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.echo_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that prints the last data item to a standard stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+<li><strong>output</strong> (<em>string</em>) – The stream to echo to. Either “stdout” or “stderr”.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.log_critical_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">log_critical_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.log_critical_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that logs a critical level message of the last data item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.log_debug_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">log_debug_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.log_debug_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that logs a debug level message of the last data item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.log_error_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">log_error_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.log_error_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that logs an error level message of the last data item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.log_info_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">log_info_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.log_info_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that logs an info level message of the last data item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.log_warning_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">log_warning_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.log_warning_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that logs a warning level message of the last data item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_gif">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_gif</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_gif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores all images of the data dictionary to a gif.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [W, H]</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_gif_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_gif_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>fps=5</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_gif_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the last item of the data dictionary to a gif.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [N, 3, W, H] or of shape [N, 1, W, H]</li>
+<li><strong>fps</strong> (<em>int</em>) – The framerate</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_jpg">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_jpg</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_jpg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores all images of a dictionary to a concatenated jpg.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [3, W, H]</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_jpg_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_jpg_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_jpg_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the last item of the data dictionary to a jpg.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [3, W, H] or of shape [1, W, H]</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_json">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_json</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the whole data dictionary in a json file named after the log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be JSON serializable data.</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_json_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_json_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_json_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the last item in data dictionary in a json file named after the log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be JSON serializable data.</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_mp4">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_mp4</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>fps=5</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_mp4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores all images of the data dictionary to a mp4.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [3, W, H]</li>
+<li><strong>fps</strong> (<em>int</em>) – Framerate</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_mp4_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_mp4_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>fps=5</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_mp4_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the last item of the data dictionary to a mp4.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [N, 3, W, H] or of shape [N, 1, W, H]</li>
+<li><strong>fps</strong> (<em>int</em>) – Framerate</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_mpl_histolines">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_mpl_histolines</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>color='navy'</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_mpl_histolines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the whole data dictionary in a matplotlib histogram lines figure.</p>
+<p>The data dictionary must store numpy vectors representing the bounds of the different histogram
+classes. Those can be extracted calling <cite>np.histogram_bin_edges( . , 10)</cite> with a odd number of classes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be numpy arrays of shape [N]</li>
+<li><strong>color</strong> (<em>string</em>) – Color of the plot. Must be a valid matplotlib color string.</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_mpl_lines">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_mpl_lines</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>labels=None</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_mpl_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the whole data dictionary in a matplotlib line figure written in a file named after the
+log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be a numpy array of shape [N]</li>
+<li><strong>labels</strong> (<em>List</em><em>[</em><em>string</em><em>]</em>) – Labels to use for the plot</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_text">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_text</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the whole data dictionary in a text file named after the log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flogger.handlers.save_to_text_last">
+<code class="descclassname">flogger.handlers.</code><code class="descname">save_to_text_last</code><span class="sig-paren">(</span><em>entry</em>, <em>data</em>, <em>path='.'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.handlers.save_to_text_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler that stores the last item in data dictionary in a text file named after the log entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entry</strong> (<em>string</em>) – Name of the log entry.</li>
+<li><strong>data</strong> (<em>Dict</em>) – Data should be printable</li>
+<li><strong>path</strong> (<em>string</em>) – Root path. Set by DataLogger if used as handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="remarks.html" class="btn btn-neutral" title="Some important remarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Alexandre Péré
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

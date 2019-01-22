@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Some important remarks &mdash; flogger 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flogger
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Content</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Some important remarks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling">Error handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#singleton">Singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asynchronous-handling">Asynchronous handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#partial-handlers">Partial handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logs-folder-structure">Logs folder structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flogger</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Some important remarks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/remarks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="some-important-remarks">
+<h1>Some important remarks<a class="headerlink" href="#some-important-remarks" title="Permalink to this headline">¶</a></h1>
+<p>Here are the tricky pieces:</p>
+<div class="section" id="error-handling">
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>Note that when using <code class="docutils literal notranslate"><span class="pre">push</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code> and <code class="docutils literal notranslate"><span class="pre">dump</span></code>, the exceptions that may occur in handlers are just
+reported, but are not raised. This allows to avoid stopping the code for errors in the logging…</p>
+</div>
+<div class="section" id="singleton">
+<h2>Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h2>
+<p>The logger is a singleton. This means that you can plug it in various places in your code, being sure that
+only one instance is effectively used. From our experience, it is better practice to put small pieces of logging
+close to the important pieces of the code, rather than logging everything at a single location. For instance, if you
+have multiple classes with different levels of hierarchy in your algorithm, don’t hesitate to put logs in every
+classes to log various types of information. But to avoid any problems, try to set the logger <code class="docutils literal notranslate"><span class="pre">path</span></code> only once.</p>
+</div>
+<div class="section" id="asynchronous-handling">
+<h2>Asynchronous handling<a class="headerlink" href="#asynchronous-handling" title="Permalink to this headline">¶</a></h2>
+<p>The handling of data is made asynchronously. This means that handlers are not called by your experiment thread, but by
+separate threads or processes (depending on your preferences). This allows to temper the impact of logging on the
+performances of your experiment. For this reason, your data have to be <strong>pickable</strong>.</p>
+<p>This being said, as you may know, python parallel capabilities are not quite perfect, and depending on how heavy are
+your logging and your data, using threads or processes may give different improvements. Also, increasing the number of
+threads or processes, may not end up in an increase of the data handling rate. As of now, we don’t have particular
+advices to tune that, other than testing and seeing how the handling rate changes.</p>
+<p>To do that, you can use the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> method. This method will wait for the handling queue to be emptied, and will log
+the duration of data handling in your console. It may be a good idea to call this after each iteration of your
+algorithms, to see how it changes with different logging parameters.</p>
+</div>
+<div class="section" id="partial-handlers">
+<h2>Partial handlers<a class="headerlink" href="#partial-handlers" title="Permalink to this headline">¶</a></h2>
+<p>Some handlers allows for extra keyword arguments (for example the color of a plot, or its title …). You can set those
+when registring by using partial functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="n">dl</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s2">&quot;entry&quot;</span><span class="p">,</span> <span class="p">[],</span>
+                    <span class="p">[],</span>
+                    <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="n">fl</span><span class="o">.</span><span class="n">save_to_mpl_histolines</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logs-folder-structure">
+<h2>Logs folder structure<a class="headerlink" href="#logs-folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataLogger</span></code> has a <code class="docutils literal notranslate"><span class="pre">path</span></code> attribute that can be set through the <code class="docutils literal notranslate"><span class="pre">set_path</span></code> method. The path cannot be set
+after some recurring entries has been registered. This path is used as root path by all the handlers that write on disk.</p>
+<p>The structure of this folder can be adjusted by naming the entries with forward slashes. For example, if the <code class="docutils literal notranslate"><span class="pre">VAE/Loss</span></code>
+entry was registered with a <code class="docutils literal notranslate"><span class="pre">save_to_mpl_lines</span></code> handlers, the figure would be created in a <code class="docutils literal notranslate"><span class="pre">VAE</span></code> subfolder, and
+would be named <code class="docutils literal notranslate"><span class="pre">Loss.png</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Alexandre Péré
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

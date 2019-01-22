@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; flogger 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Some important remarks" href="remarks.html" />
+    <link rel="prev" title="Flogger Documentation" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flogger
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Content</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#direct-call-to-handler-functions">Direct call to handler functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automating-with-recurring-lof-entries">Automating with recurring lof entries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="remarks.html">Some important remarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flogger</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>Let’s see how to use <em>flogger</em> from scratch.</p>
+<div class="section" id="direct-call-to-handler-functions">
+<h2>Direct call to handler functions<a class="headerlink" href="#direct-call-to-handler-functions" title="Permalink to this headline">¶</a></h2>
+<p>In its simplest use, flogger provides <em>handlers</em> function that can be used to store different types of data. <em>Handlers</em>
+are helper methods which follows the signature <code class="docutils literal notranslate"><span class="pre">(entry:</span> <span class="pre">string,</span> <span class="pre">data:</span> <span class="pre">dict,</span> <span class="pre">...)</span></code> where:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">entry</span></code> represents the log entry</li>
+<li><code class="docutils literal notranslate"><span class="pre">data</span></code> contains ordered data; keys are integer increments and items are of various types depending on the handler.</li>
+</ul>
+</div></blockquote>
+<p><em>Handlers</em> can roughly be separated in two categories:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The ones that act on the whole <code class="docutils literal notranslate"><span class="pre">data</span></code></li>
+<li>The ones that only act on the last <code class="docutils literal notranslate"><span class="pre">data</span></code> item, which by convention, end with <code class="docutils literal notranslate"><span class="pre">_last</span></code></li>
+</ul>
+</div></blockquote>
+<p>Example of direct use of handlers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">flogger</span> <span class="k">as</span> <span class="nn">fl</span>
+<span class="n">fl</span><span class="o">.</span><span class="n">echo_last</span><span class="p">(</span><span class="s2">&quot;main_function&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;Hey You&quot;</span><span class="p">})</span>
+<span class="n">fl</span><span class="o">.</span><span class="n">echo_last</span><span class="p">(</span><span class="s2">&quot;main_function&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;Hey Again&quot;</span><span class="p">})</span>
+<span class="n">fl</span><span class="o">.</span><span class="n">save_to_mpl_lines</span><span class="p">(</span><span class="s2">&quot;main_function&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/home/user/logs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="automating-with-recurring-lof-entries">
+<h2>Automating with recurring lof entries<a class="headerlink" href="#automating-with-recurring-lof-entries" title="Permalink to this headline">¶</a></h2>
+<p>If you want to log a lot of different pieces of data into a lot of different forms, it can rapidly becomes bothering
+to handle the storage of data and the calling to every handlers here and there in your code. <em>Flogger</em> allows you to
+lighten your logging by declaring recurring log entries whose storage and handlers calling are automated. Example of use
+of recurring log entries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">flogger</span> <span class="k">as</span> <span class="nn">fl</span>
+
+<span class="c1"># We initialize the logger</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">DataLogger</span><span class="p">()</span>
+
+<span class="c1"># We declare a recurring entries</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">fl</span><span class="o">.</span><span class="n">echo_last</span><span class="p">,</span> <span class="n">fl</span><span class="o">.</span><span class="n">add_tsb_scalar_last</span><span class="p">],</span>
+                   <span class="p">[],</span>
+                   <span class="p">[</span><span class="n">fl</span><span class="o">.</span><span class="n">save_to_json</span><span class="p">,</span> <span class="n">fl</span><span class="o">.</span><span class="n">save_to_mpl_lines</span><span class="p">])</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s2">&quot;Performance&quot;</span><span class="p">,</span> <span class="p">[],</span>
+                          <span class="p">[],</span>
+                          <span class="p">[</span><span class="n">fl</span><span class="o">.</span><span class="n">save_to_json</span><span class="p">])</span>
+
+<span class="c1"># We push some data into recurring entries</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># Calls `fl.echo_last` and `fl.add_tsb_scalar_last` on `{0:0.5}`</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;Performance&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+<span class="c1"># Calls nothing</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="c1"># Calls `fl.echo_last` and `fl.add_tsb_scalar_last` on `{0:0.5, 1:0.6}`</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;Performance&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="c1"># Calls nothing</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+<span class="c1"># Calls `fl.save_to_json` and `fl.save_to_mpl_lines` on `{0:0.5, 1:0.6}`</span>
+<span class="c1"># and `fl.save_to_json` on  `{0:0.7, 1:0.8}`</span>
+</pre></div>
+</div>
+<p>As shown in the example, you have to declare a log entry by using the <code class="docutils literal notranslate"><span class="pre">declare(entry,</span> <span class="pre">...)</span></code> method. Doing so allows you
+to use three methods to act on your data:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">push(entry,</span> <span class="pre">time,</span> <span class="pre">data)</span></code> to add new pieces of data under the entry</li>
+<li><code class="docutils literal notranslate"><span class="pre">dump()</span></code> to dump the data (along with all other managed by the logger)</li>
+<li><code class="docutils literal notranslate"><span class="pre">reset(entry)</span></code> to empty the storage related to the entry</li>
+</ul>
+</div></blockquote>
+<p>Each time one of those methods is called, associated handlers will be called on the whole entry storage. Those handlers
+are provided to the logger when the entry is declared. Indeed, three lists of handlers must be provided as extra
+arguments to the <code class="docutils literal notranslate"><span class="pre">declare</span></code> method:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">on_push_callables</span></code> a list of handlers that will be called on the data at every call to the <code class="docutils literal notranslate"><span class="pre">push</span></code> method</li>
+<li><code class="docutils literal notranslate"><span class="pre">on_dump_callables</span></code> a list of handlers called when <code class="docutils literal notranslate"><span class="pre">dump</span></code> is called</li>
+<li><code class="docutils literal notranslate"><span class="pre">on_reset_callables</span></code> a list of handlers called when <code class="docutils literal notranslate"><span class="pre">reset</span></code> is called</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While <code class="docutils literal notranslate"><span class="pre">push</span></code> and <code class="docutils literal notranslate"><span class="pre">reset</span></code> are specific to an entry, the <code class="docutils literal notranslate"><span class="pre">dump</span></code> method act on every entries.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">There is no much more to tell about! You can check the available handlers in the <strong>API</strong> section, but please be sure
+to check the <strong>Remarks</strong> section before using flogger.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="remarks.html" class="btn btn-neutral float-right" title="Some important remarks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Flogger Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Alexandre Péré
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
