@@ -153,7 +153,9 @@ def save_to_gif(entry, data, path=".", **kwargs):
     :param string path: Root path. Set by DataLogger if used as handler.
     """
     values = [data[i] for i in sorted(data.keys())]
-    writer = imageio.get_writer("{}.gif".format(os.path.join(path, entry)), fps=5)
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    writer = imageio.get_writer("{}.gif".format(path), fps=5)
     for frame in values:
         writer.append_data(frame)
     writer.close()
@@ -169,7 +171,9 @@ def save_to_gif_last(entry, data, fps=5, path=".", **kwargs):
     """
     last_time = max(data.keys())
     value = data[last_time]
-    writer = imageio.get_writer("{}.gif".format(os.path.join(path, entry)), fps=fps)
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    writer = imageio.get_writer("{}.gif".format(path), fps=fps)
     for frame in value:
         writer.append_data(np.moveaxis(frame, 0, -1))
     writer.close()
@@ -185,7 +189,9 @@ def save_to_jpg(entry, data, path=".", **kwargs):
     values = list(data.values())
     image = np.concatenate(values, axis=1)
     image = np.moveaxis(image, 0, -1)
-    imageio.imwrite("{}.jpg".format(os.path.join(path, entry)), image)
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    imageio.imwrite("{}.jpg".format(path), image)
 
 
 def save_to_jpg_last(entry, data, path=".", **kwargs):
@@ -195,6 +201,8 @@ def save_to_jpg_last(entry, data, path=".", **kwargs):
     :param Dict data: Data should be a numpy array of shape [3, W, H] or of shape [1, W, H]
     :param string path: Root path. Set by DataLogger if used as handler.
     """
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     imageio.imwrite("{}.jpg".format(os.path.join(path, entry)), list(data.values())[-1])
 
 
@@ -207,7 +215,9 @@ def save_to_mp4(entry, data, fps=5, path=".", **kwargs):
     :param string path: Root path. Set by DataLogger if used as handler.
     """
     values = [data[i] for i in sorted(data.keys())]
-    writer = imageio.get_writer("{}.mp4".format(os.path.join(path, entry)), fps=fps)
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    writer = imageio.get_writer("{}.mp4".format(path), fps=fps)
     for frame in values:
         writer.append_data(np.moveaxis(frame, 0, -1))
     writer.close()
@@ -223,7 +233,9 @@ def save_to_mp4_last(entry, data, fps=5, path=".", **kwargs):
     """
     last_time = max(data.keys())
     value = data[last_time]
-    writer = imageio.get_writer("{}.mp4".format(os.path.join(path, entry)), fps=fps)
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    writer = imageio.get_writer("{}.mp4".format(path), fps=fps)
     for frame in value:
         writer.append_data(np.moveaxis(frame, 0, -1))
     writer.close()
@@ -236,7 +248,9 @@ def save_to_json(entry, data, path=".", **kwargs):
     :param Dict data: Data should be JSON serializable data.
     :param string path: Root path. Set by DataLogger if used as handler.
     """
-    with open('{}.json'.format(os.path.join(path, entry)), 'w') as fp:
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open('{}.json'.format(path), 'w') as fp:
         json.dump(dict(data), fp)
 
 
@@ -249,7 +263,9 @@ def save_to_json_last(entry, data, path=".", **kwargs):
     """
     last_time = max(data.keys())
     value = data[last_time]
-    with open('{}.json'.format(os.path.join(path, entry)), 'w') as fp:
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open('{}.json'.format(path), 'w') as fp:
         json.dump(value, fp)
 
 
@@ -262,7 +278,9 @@ def save_to_text_last(entry, data, path=".", **kwargs):
     """
     last_time = max(data.keys())
     value = pformat(data[last_time])
-    with open('{}.txt'.format(os.path.join(path, entry)), 'w') as fp:
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open('{}.txt'.format(path), 'w') as fp:
         fp.write(value)
 
 
@@ -274,7 +292,9 @@ def save_to_text(entry, data, path=".", **kwargs):
     :param string path: Root path. Set by DataLogger if used as handler.
     """
     value = pformat(data)
-    with open('{}.txt'.format(os.path.join(path, entry)), 'w') as fp:
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open('{}.txt'.format(path), 'w') as fp:
         fp.write(value)
 
 
@@ -292,7 +312,9 @@ def save_to_mpl_lines(entry, data, labels=None, path=".", **kwargs):
     if labels:
         plt.legend(labels)
     plt.title(entry)
-    plt.savefig("{}.png".format(os.path.join(path, entry)))
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    plt.savefig("{}.png".format(path))
     plt.close(fig)
 
 
@@ -313,5 +335,7 @@ def save_to_mpl_histolines(entry, data, color="navy", path=".", **kwargs):
         plt.fill_between(np.array(list(data.keys()), dtype=np.uint16), histograms[:, i], histograms[:, -i - 1],
                          alpha=0.05, color=color)
     plt.title(entry)
-    plt.savefig("{}.png".format(os.path.join(path, entry)))
+    path = os.path.join(path, entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    plt.savefig("{}.png".format(path))
     plt.close(fig)
