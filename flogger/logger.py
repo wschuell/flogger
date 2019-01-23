@@ -113,6 +113,13 @@ class DataLogger(metaclass=Singleton):
         os.makedirs(path, exist_ok=True)
         self._managed.path = path
 
+    def get_path(self):
+        """Returns the root path of the logger.
+
+        :param path:
+        :return:
+        """
+
     def set_pool(self, pool, n_par=5):
         """Sets the executor to be used to call handlers.
 
