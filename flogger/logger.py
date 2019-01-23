@@ -231,6 +231,6 @@ class DataLogger(metaclass=Singleton):
             else:
                 break
         if log_durations:
-            logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Last wait occured {self.tick - b} ago.")
+            logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Last wait occured {b - self.tick} ago.")
             logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Waited {datetime.datetime.now() - b} for completion.")
         self.tick = datetime.datetime.now()
