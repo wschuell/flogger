@@ -25,7 +25,7 @@ Example of direct use of handlers::
     fl.echo_last("main_function", {0: "Hey Again"})
     fl.save_to_mpl_lines("main_function", {0: 1, 1:5, 2: 3}, path="/home/user/logs")
 
-Automating with recurring lof entries
+Automating with recurring log entries
 *************************************
 
 If you want to log a lot of different pieces of data into a lot of different forms, it can rapidly becomes bothering
