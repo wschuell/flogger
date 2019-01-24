@@ -116,9 +116,10 @@ class DataLogger(metaclass=Singleton):
     def get_path(self):
         """Returns the root path of the logger.
 
-        :param path:
-        :return:
+        :return: The root path of the logger.
+        :rtype: string
         """
+        return self._managed.path
 
     def set_pool(self, pool, n_par=5):
         """Sets the executor to be used to call handlers.
