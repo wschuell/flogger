@@ -12,7 +12,8 @@ import os.path
 import os
 import numpy as np
 from multiprocessing import Manager
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, Future
+from threading import Lock
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, Future, wait
 import datetime
 import time
 import logging
@@ -97,9 +98,11 @@ class DataLogger(metaclass=Singleton):
         self._managed.on_reset_callables = self._manager.dict()
         self._managed.on_dump_callables = self._manager.dict()
 
-        self.tick = datetime.datetime.now()
-        self.futures = list()
-        self.pool = ThreadPoolExecutor(max_workers=1)
+        self._tick = datetime.datetime.now()
+        self._futures = list()
+        self._pool = ThreadPoolExecutor(max_workers=1)
+        self._mode = "active"
+
         # Log
         logging.getLogger("datalogger").info("{} DataLogger initialized!".format(self._managed.name))
 
@@ -112,6 +115,19 @@ class DataLogger(metaclass=Singleton):
             raise Exception("You tried to change logger path after having registered some entries.")
         os.makedirs(path, exist_ok=True)
         self._managed.path = path
+
+    def set_mode(self, mode):
+        """Sets the mode of the logger.
+
+        If mode is `active`, then data are stored and handled. If mode is `passive`, data are not stored, and handlers
+        are not triggered.
+
+        :param string mode: The mode. Either "active" or "passive".
+        """
+        assert mode in ["active", "passive"], f"Mode {mode} is unknown."
+
+        self._mode = mode
+
 
     def get_path(self):
         """Returns the root path of the logger.
@@ -130,9 +146,9 @@ class DataLogger(metaclass=Singleton):
         if len(self._managed.lockers) != 0:
             raise Exception("You tried to pool after having registered some entries.")
         if pool == "thread":
-            self.pool = ThreadPoolExecutor(max_workers=n_par)
+            self._pool = ThreadPoolExecutor(max_workers=n_par)
         elif pool == "process":
-            self.pool = ProcessPoolExecutor(max_workers=n_par)
+            self._pool = ProcessPoolExecutor(max_workers=n_par)
         else:
             raise Exception(f"Unknown pool type `{pool}`")
 
@@ -176,23 +192,25 @@ class DataLogger(metaclass=Singleton):
         :param int or None time: Date of the logging (epoch, iteration, tic ...). Will be used as key in the data
         dictionary. If `None`, the last data key plus one will be used.
         """
-        future = self.pool.submit(DataLogger._push,
-                                  self._managed,
-                                  entry,
-                                  value,
-                                  time if time is not None else self._managed.counters[entry])
-        future.add_done_callback(DataLogger._futures_callback)
-        self.futures.append(future)
+        if self._mode == "active":
+            future = self._pool.submit(DataLogger._push,
+                                       self._managed,
+                                       entry,
+                                       value,
+                                       time if time is not None else self._managed.counters[entry])
+            future.add_done_callback(DataLogger._futures_callback)
+            self._futures.append(future)
 
     def dump(self):
         """Calls handlers declared for `on_dump` event, for all registered log entries.
         """
-        for entry in self._managed.entries:
-            future = self.pool.submit(DataLogger._dump,
-                                      self._managed,
-                                      entry)
-            future.add_done_callback(DataLogger._futures_callback)
-            self.futures.append(future)
+        if self._mode == "active":
+            for entry in self._managed.entries:
+                future = self._pool.submit(DataLogger._dump,
+                                           self._managed,
+                                           entry)
+                future.add_done_callback(DataLogger._futures_callback)
+                self._futures.append(future)
 
     def reset(self, entry):
         """Resets the data of a recurring log entry.
@@ -201,12 +219,12 @@ class DataLogger(metaclass=Singleton):
 
         :param string entry: name of the log entry.
         """
-
-        future = self.pool.submit(DataLogger._reset,
-                                  self._managed,
-                                  entry)
-        future.add_done_callback(DataLogger._futures_callback)
-        self.futures.append(future)
+        if self._mode == "active":
+            future = self._pool.submit(DataLogger._reset,
+                                       self._managed,
+                                       entry)
+            future.add_done_callback(DataLogger._futures_callback)
+            self._futures.append(future)
 
     def get_entry_length(self, entry):
         """Retrieves the number of data saved for a log entry.
@@ -231,14 +249,12 @@ class DataLogger(metaclass=Singleton):
 
         :param bool log_durations: Whether to log the wait duration.
         """
+        # Using a Lock with timeout to wait allows to see it on concurrency diagrams.
         b = datetime.datetime.now()
-        while True:
-            self.futures = list(filter(lambda x: not x.done(), self.futures))
-            if self.futures:
-                time.sleep(.1)
-            else:
-                break
+        with Lock() as l:
+            wait(self._futures)
+        self._futures.clear()
         if log_durations:
-            logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Last wait occured {b - self.tick} ago.")
+            logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Last wait occured {b - self._tick} ago.")
             logging.getLogger("datalogger").info(f"{self._managed.name} DataLogger: Waited {datetime.datetime.now() - b} for completion.")
-        self.tick = datetime.datetime.now()
+        self._tick = datetime.datetime.now()
